@@ -26,4 +26,12 @@ router.get('/register', function(req, res, next) {
   });
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('login', { 
+  	title: 'SyncMusic', 
+  	slogan: 'We sync your music!'
+  });
+});
+
+
 module.exports = router;
