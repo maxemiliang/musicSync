@@ -14,8 +14,13 @@
 		</div>
 		<div class="grid-column -medium-4">
 			<a href="/" class="button -hollow"><i class="icon -bars"></i>Home</a>
-			<a href="/register" class="button -hollow"><i class="icon -child"></i>Register</a>
-			<a href="/login" class="button -hollow"><i class="icon -user"></i>Login</a>
+			 <a href="/register" class="button -hollow"><i class="icon -child"></i>Register</a>
+			 <a href="/login" class="button -hollow"><i class="icon -user"></i>Login</a>
+			 {{#if loggedIn}}
+            <a class="button -primary" href="/add"><i class="icon cloud-upload"></i>Upload music</a>
+            <a class="button -hollow" href="/playlist"><i class="icon play-circle"></i>Playlists</a>
+            <a class="button -hollow" href="/profile/{{userID}}"><i class="icon -user"></i>Profile</a>
+			 {{/if}}
 		</div>	
 	</div>
     {{{body}}}

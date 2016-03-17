@@ -16,15 +16,36 @@ db.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+    e = false
+    if (req.session.err != undefined || req.session.err != '') {
+        e = true
+    } else {
+        e = false
+    }
+    res.render('index', {error: req.session.err, err: e});
+    req.session.err = '';
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('register');
+    e = false
+    if (req.session.err != undefined || req.session.err != '') {
+        e = true
+    } else {
+        e = false
+    }
+    res.render('register', {error: req.session.err, err: e});
+    req.session.err = '';
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login');
+    e = false
+    if (req.session.err != undefined || req.session.err != '') {
+        e = true
+    } else {
+        e = false
+    }
+    res.render('login', {error: req.session.err, err: e});
+    req.session.err = '';
 });
 
 router.post('/login', function(req, res, next) {
@@ -38,10 +59,12 @@ router.post('/login', function(req, res, next) {
                     req.session.userID = results[0]['uID'];
                     res.redirect('/');
                 } else {
+                    req.session.err = 'Password or username was wrong!';
                     res.redirect('/login'); 
                 }
             });        
         } else {
+            req.session.err = 'Password or username was wrong!';
             res.redirect('/login');
         }
     });
@@ -50,17 +73,24 @@ router.post('/login', function(req, res, next) {
 router.post('/register', function(req, res, next) {
 	var hashed;
     if(req.body.username.length > 5 && req.body.password.length > 7) {
-        password(req.body.password).hash(function(err, hash){
-            if (err) throw new Error('Something happened!');
-            hashed = hash;
-            db.query('INSERT INTO users (username, password) VALUES (?, ?)', [req.body.username, hashed], function(err, results){
-                if (err) throw err;
-                
-                res.redirect('/')
-            })
+        db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(err, result){
+            if (result.length == 0){
+                password(req.body.password).hash(function(err, hash){
+                    if (err) throw new Error('Something happened!');
+                    hashed = hash;
+                    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [req.body.username, hashed], function(err, results){
+                        if (err) throw err;
+                        res.redirect('/');
+                    })
+                });
+            } else {
+                req.session.err = 'Username taken!';
+                res.redirect('/register');
+            }
         });
     } else {
-        res.redirect('/register/1')
+        req.session.err = 'Username needs to be longer than 5 characters and password needs to be longer than 7characters!';
+        res.redirect('/register');
     }
 });
 
