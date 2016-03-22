@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 
@@ -24,6 +25,7 @@ app.use(session({secret: 'oeffsoidfsgodfjgoejfoeifsjfjsofjeofdobjfborogfojfoefjs
                  saveUninitialized: false,
                  resave: false
                 }));
+app.use(flash());
 
 app.use('/', routes);
 

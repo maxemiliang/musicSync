@@ -16,36 +16,24 @@ db.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    e = false
-    if (req.session.err != undefined || req.session.err != '') {
-        e = true
-    } else {
-        e = false
-    }
-    res.render('index', {error: req.session.err, err: e});
-    req.session.err = '';
+    res.render('index', {loggedIn: req.session.loggedIn, username: req.session.username});
 });
 
 router.get('/register', function(req, res, next) {
-    e = false
-    if (req.session.err != undefined || req.session.err != '') {
-        e = true
-    } else {
-        e = false
-    }
-    res.render('register', {error: req.session.err, err: e});
-    req.session.err = '';
+    res.render('register', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
 });
 
 router.get('/login', function(req, res, next) {
-    e = false
-    if (req.session.err != undefined || req.session.err != '') {
-        e = true
-    } else {
-        e = false
-    }
-    res.render('login', {error: req.session.err, err: e});
-    req.session.err = '';
+    res.render('login', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+});
+
+router.get('/logout', function(req, res, next){
+    req.session.destroy();
+    res.redirect('/');
+});
+
+router.get('/profile/:id', function(req, res, next) {
+    res.send('username: ' + req.params.id);
 });
 
 router.post('/login', function(req, res, next) {
@@ -57,14 +45,16 @@ router.post('/login', function(req, res, next) {
                 if(err) throw new Error('Something happened!');
                 if(verified) {
                     req.session.userID = results[0]['uID'];
+                    req.session.username = results[0]['username'];
+                    req.session.loggedIn = true;
                     res.redirect('/');
                 } else {
-                    req.session.err = 'Password or username was wrong!';
+                    req.flash('err', 'Password or username is wrong');
                     res.redirect('/login'); 
                 }
             });        
         } else {
-            req.session.err = 'Password or username was wrong!';
+            req.flash('err', 'Password or username is wrong');
             res.redirect('/login');
         }
     });
@@ -84,12 +74,12 @@ router.post('/register', function(req, res, next) {
                     })
                 });
             } else {
-                req.session.err = 'Username taken!';
+                req.flash('err', 'username not available');
                 res.redirect('/register');
             }
         });
     } else {
-        req.session.err = 'Username needs to be longer than 5 characters and password needs to be longer than 7characters!';
+        req.flash('err', 'Username needs to be longer than 5 characters and password needs to be longer than 7 characters!');
         res.redirect('/register');
     }
 });
