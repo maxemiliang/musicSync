@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs-plus');
 var password = require('password-hash-and-salt');
+var multer  = require('multer');
+var upload = multer({ dest: 'music/'});
 process.setMaxListeners(0);
+
 
 var mysql      = require('mysql');
 var db = mysql.createConnection({
@@ -34,6 +37,14 @@ router.get('/logout', function(req, res, next){
 
 router.get('/profile/:id', function(req, res, next) {
     res.send('username: ' + req.params.id);
+});
+
+router.get('/add', function(req, res, next){
+   res.render('upload', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username}); 
+});
+
+router.post('/upload', function(req, res, next){
+    console.log(req.files);
 });
 
 router.post('/login', function(req, res, next) {

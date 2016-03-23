@@ -1,0 +1,29 @@
+<div class="grid-row">
+    <h1><i class="icon -cloud-upload"></i> Upload Music</h1>
+    <form class="form" action="/upload" method="post" enctype="multipart/form-data">
+
+      <div class="field">
+        <label>Enter track/song name</label>
+        <input placeholder="Enter name" name="track" type="text">
+      </div>
+
+      <div class="field">
+        <label>Who's the artist</label>
+        <input placeholder="Enter performers name" name="artist" type="text">
+        <span class="field-help">Optional</span>
+      </div>
+      <div class="field">
+        <label>What album?</label>
+        <input placeholder="Album of the audio" name="album" type="text">
+        <span class="field-help">Optional</span>
+      </div>
+      <div class="field">
+        <label>Audio File</label>
+        <input placeholder="Add file" name="file" type="file">
+        <span class="field-help">Accepted file types are: mp3</span>
+      </div>
+      <div class="field">
+          <input class="button -primary" type="submit" value="Upload file">
+      </div>
+    </form>
+</div>
