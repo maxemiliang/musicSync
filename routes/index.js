@@ -17,7 +17,7 @@ var db = mysql.createConnection({
 
 db.connect();
 
-function isLoggedin() {
+function isLoggedin(req) {
     if (req.session.userID != null || req.session.userID != undefined || req.session.userID != '' || req.session.userID <= 0) {
         return false;
     } else {
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
-    if (!isLoggedin()) {    
+    if (!isLoggedin(req)) {    
         res.render('register', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
     } else {
         res.redirect('/');
@@ -39,7 +39,7 @@ router.get('/register', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    if (!isLoggedin()) {
+    if (!isLoggedin(req)) {
         res.render('login', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
     } else {
         res.redirect('/');
@@ -61,7 +61,7 @@ router.get('/profile/:id', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next){
-    if (isLoggedin()) {   
+    if (isLoggedin(req)) {   
         res.render('upload', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username}); 
     } else {
         res.redirect('/');
@@ -69,7 +69,7 @@ router.get('/add', function(req, res, next){
 });
 
 router.post('/upload', function(req, res, next){
-    if(isLoggedin()) {
+    if(isLoggedin(req)) {
         upload.single('file') 
         console.dir(req.file);
         res.status(204).end()
