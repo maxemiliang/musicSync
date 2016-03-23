@@ -17,17 +17,33 @@ var db = mysql.createConnection({
 
 db.connect();
 
+function isLoggedin() {
+    if (req.session.userID != null || req.session.userID != undefined || req.session.userID != '' || req.session.userID <= 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', {loggedIn: req.session.loggedIn, username: req.session.username});
 });
 
 router.get('/register', function(req, res, next) {
-    res.render('register', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+    if (!isLoggedin()) {    
+        res.render('register', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+    if (!isLoggedin()) {
+        res.render('login', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.get('/logout', function(req, res, next){
@@ -36,15 +52,30 @@ router.get('/logout', function(req, res, next){
 });
 
 router.get('/profile/:id', function(req, res, next) {
-    res.send('username: ' + req.params.id);
+    if (isLoggedin()) {
+        res.send('username: ' + req.params.id);
+    } else {
+        res.redirect('/');
+    }
+
 });
 
 router.get('/add', function(req, res, next){
-   res.render('upload', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username}); 
+    if (isLoggedin()) {   
+        res.render('upload', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username}); 
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.post('/upload', function(req, res, next){
-    console.log(req.files);
+    if(isLoggedin()) {
+        upload.single('file') 
+        console.dir(req.file);
+        res.status(204).end()
+    } else {
+        res.redirect('')
+    }
 });
 
 router.post('/login', function(req, res, next) {
