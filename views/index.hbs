@@ -1,6 +1,21 @@
-
 <div class="grid-row">
-    <div class="panel">
-        <h3>Newest uploaded songs</h3>
-    </div>
+    {{#if msg}}
+        <div class="alert -success">{{msg}}</div>
+    {{/if}}
+    {{#each songs}}
+        <div class="panel">
+            <div class="grid-row">
+                <div class="grid-column -xsmall-6">    
+                    <h1>{{title}}</h3>
+                    <mark>Performed by: <strong>{{artist}}</strong></mark>
+                    <small>in Album: <strong>{{album}}</strong> </small>
+                </div>
+                <div class="grid-column -xsmall-6">
+                    <audio controls>
+                        <source src='C:\Users\maxemiliangronbl\Desktop\NodeJS\musicSync\music\60ae1d97672af6b2e9a6117ba09f80ff' type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </div>
+    {{/each}}
 </div>

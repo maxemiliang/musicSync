@@ -1,10 +1,13 @@
 <div class="grid-row">
     <h1><i class="icon -cloud-upload"></i> Upload Music</h1>
+    {{#if err}}
+		    <div class="alert -error">{{err}}</div>
+    {{/if}}
     <form class="form" action="/upload" method="post" enctype="multipart/form-data">
 
       <div class="field">
-        <label>Enter track/song name</label>
-        <input placeholder="Enter name" name="track" type="text">
+        <label>Enter Song Title</label>
+        <input placeholder="Enter name" name="title" type="text">
       </div>
 
       <div class="field">
