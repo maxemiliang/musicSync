@@ -1,13 +1,12 @@
 <div class="grid-row">
-    {{#if msg}}
-        <div class="alert -success">{{msg}}</div>
-    {{/if}}
-    {{#each songs}}
+   {{#if album}} 
+    <h1>Album: {{album.0.album}}</h1>
+    <hr>
+    {{#each album}}
         <div class="panel">
             <div class="grid-row">
                 <div class="grid-column -xsmall-6">    
                     <h1>{{title}} - {{artist}}</h3>
-                    <mark>in Album: <a class="white-a" href="/album/{{album}}"><strong>{{album}}</strong></a> </mark>
                     <samp>Uploaded by: <a class="white-a" href="/profile/{{username}}">{{username}}</a> </samp>
                 </div>
                 <div class="grid-column -xsmall-6">
@@ -17,6 +16,9 @@
                 </div>
             </div>
         </div>
-        <br> 
+        <br>
     {{/each}}
+{{else}}
+<h1>No album found...</h1>
+{{/if}}
 </div>

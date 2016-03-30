@@ -11,3 +11,13 @@ a {
 	padding: 30px;
 	padding-top: 15px;
 }
+
+.audioplayer {
+    padding-top: 40px;
+    width: 100%;
+}
+
+.white-a {
+    color: white; 
+    text-decoration: underline;
+}

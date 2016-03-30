@@ -10,7 +10,7 @@ USE `musick`;
 DROP TABLE IF EXISTS `music`;
 CREATE TABLE `music` (
   `tID` int(11) NOT NULL AUTO_INCREMENT,
-  `uID` int(11) NOT NULL,
+  `username` varchar(300) NOT NULL,
   `title` varchar(100) NOT NULL,
   `artist` varchar(100) NOT NULL,
   `album` varchar(100) NOT NULL,
@@ -37,4 +37,4 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2016-03-29 12:50:14
+-- 2016-03-30 07:47:14

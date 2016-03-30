@@ -5,7 +5,7 @@ var fs = require('fs');
 var findRemoveSync = require('find-remove');
 var password = require('password-hash-and-salt');
 var multer = require('multer');
-var upload = multer({ dest: 'music/'});
+var upload = multer({ dest: 'public/music/'});
 var BinaryServer = require('binaryjs').BinaryServer;
 var bserver = new BinaryServer({port: 9000, path: '/songStream'});
 process.setMaxListeners(0);
@@ -59,13 +59,18 @@ router.get('/logout', function(req, res, next){
     res.redirect('/');
 });
 
-router.get('/profile/:id', function(req, res, next) {
-    if (req.session.loggedIn) {
-        res.send('username: ' + req.params.id);
-    } else {
-        res.redirect('/');
-    }
+router.get('/album/:id', function(req, res, next) {
+    db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function(err, results) {    
+        if (err) throw err;
+        res.render('album', {album: results});
+    });
+});
 
+router.get('/profile/:id', function(req, res, next) {
+    db.query('SELECT * FROM music WHERE username=?', [req.params.id], function(err, results) {    
+        if (err) throw err;
+        res.render('profile', {album: results});
+    });
 });
 
 router.get('/add', function(req, res, next){
@@ -81,9 +86,8 @@ router.post('/upload', upload.single('file'), function(req, res, next){
         if (req.file) {     
             if (req.file.mimetype == 'audio/mpeg') {
                 if (req.body.title.length > 0 && req.body.artist.length > 0 && req.body.album.length > 0) {
-                    db.query('INSERT INTO music (title, artist, album, location, uID, date) VALUES (?, ?, ?, ?, ?, NOW())', [req.body.title, req.body.artist, req.body.album, req.file.filename, req.session.userID], function(err) {
+                    db.query('INSERT INTO music (title, artist, album, location, username, date) VALUES (?, ?, ?, ?, ?, NOW())', [req.body.title, req.body.artist, req.body.album, req.file.filename, req.session.username], function(err) {
                         if (err) throw err;
-                        console.log('OH HELLOO!!');
                         req.flash('succ', 'Song uploaded successfully!');
                         res.redirect('/');
                     });
@@ -92,7 +96,7 @@ router.post('/upload', upload.single('file'), function(req, res, next){
                     res.redirect('/add');
                 }
             } else {
-                findRemoveSync('music', {files: req.file.filename});
+                findRemoveSync('public/music/', {files: req.file.filename});
                 req.flash('err', 'Not a mpeg file!');
                 res.redirect('/add');
             }

@@ -1,14 +1,14 @@
 <div class="grid-row">
-    {{#if msg}}
-        <div class="alert -success">{{msg}}</div>
-    {{/if}}
-    {{#each songs}}
+    {{#if profile}}
+    <h1>{{profile.0.username}}'s Profile </h1>
+    <hr>
+    <h3>Uploaded music:</h3>
+    {{#each profile}}
         <div class="panel">
             <div class="grid-row">
                 <div class="grid-column -xsmall-6">    
                     <h1>{{title}} - {{artist}}</h3>
                     <mark>in Album: <a class="white-a" href="/album/{{album}}"><strong>{{album}}</strong></a> </mark>
-                    <samp>Uploaded by: <a class="white-a" href="/profile/{{username}}">{{username}}</a> </samp>
                 </div>
                 <div class="grid-column -xsmall-6">
                     <audio class="audioplayer" controls preload="metadata">
@@ -17,6 +17,9 @@
                 </div>
             </div>
         </div>
-        <br> 
+        <br>
     {{/each}}
+    {{else}}
+    <h1>No Profile found</h1>
+    {{/if}}
 </div>
