@@ -32,10 +32,21 @@ function isLoggedin(req) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) { 
-    db.query('SELECT * FROM music ORDER BY date ASC', function (err, results) {
+    db.query('SELECT * FROM music ORDER BY date DESC', function (err, results) {
         if (err) throw err;
-        res.render('index', {loggedIn: req.session.loggedIn, username: req.session.username, msg: req.flash('succ'), songs: results});
+        res.render('index', {loggedIn: req.session.loggedIn, username: req.session.username, msg: req.flash('succ'), songs: results, err: req.flash('err')});
     });
+});
+
+router.get('/download/:file', function(req, res, next) {
+    var file = 'public/music/' + req.params.file;
+    if (fsplus.existsSync(file)) {    
+        res.download(file);
+    } else {
+        res.status(404);
+        req.flash('err', 'File not found..');
+        res.redirect('/');
+    }
 });
 
 router.get('/register', function(req, res, next) {
@@ -63,13 +74,6 @@ router.get('/album/:id', function(req, res, next) {
     db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function(err, results) {    
         if (err) throw err;
         res.render('album', {album: results});
-    });
-});
-
-router.get('/profile/:id', function(req, res, next) {
-    db.query('SELECT * FROM music WHERE username=?', [req.params.id], function(err, results) {    
-        if (err) throw err;
-        res.render('profile', {album: results});
     });
 });
 

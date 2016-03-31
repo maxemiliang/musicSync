@@ -20,6 +20,19 @@ CREATE TABLE `music` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `music_playlists`;
+CREATE TABLE `music_playlists` (
+  `mID` int(11) NOT NULL AUTO_INCREMENT,
+  `sID` int(11) NOT NULL,
+  `pID` int(11) NOT NULL,
+  PRIMARY KEY (`mID`),
+  KEY `sID` (`sID`),
+  KEY `pID` (`pID`),
+  CONSTRAINT `music_playlists_ibfk_1` FOREIGN KEY (`sID`) REFERENCES `music` (`tID`) ON DELETE NO ACTION,
+  CONSTRAINT `music_playlists_ibfk_2` FOREIGN KEY (`pID`) REFERENCES `playlist` (`pID`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
   `pID` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,4 +50,4 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2016-03-30 07:47:14
+-- 2016-03-31 06:05:59

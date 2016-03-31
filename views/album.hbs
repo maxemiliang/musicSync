@@ -7,12 +7,10 @@
             <div class="grid-row">
                 <div class="grid-column -xsmall-6">    
                     <h1>{{title}} - {{artist}}</h3>
-                    <samp>Uploaded by: <a class="white-a" href="/profile/{{username}}">{{username}}</a> </samp>
+                    <samp>Uploaded by: {{username}} </samp>
                 </div>
                 <div class="grid-column -xsmall-6">
-                    <audio class="audioplayer" controls preload="metadata">
-                        <source src='/music/{{location}}' type="audio/mpeg">
-                    </audio>
+                    <div id="a{{location}}" class="aplayer"></div>
                 </div>
             </div>
         </div>
@@ -22,3 +20,23 @@
 <h1>No album found...</h1>
 {{/if}}
 </div>
+<script defer>
+    i = 1;
+    {{#each album}}
+        var i = new APlayer({
+        element: document.getElementById('a{{location}}'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        theme: '#e6d0b2',
+        music: {
+            title: '{{title}}',
+            author: '{{artist}}',
+            url: '/music/{{location}}',
+            pic: '/img/music.png'
+        }
+        });
+        i.init();
+        i++;
+    {{/each}}
+</script>

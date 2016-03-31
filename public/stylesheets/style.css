@@ -21,3 +21,7 @@ a {
     color: white; 
     text-decoration: underline;
 }
+
+.no-under {
+    text-decoration: none;
+}
