@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
+var FONTS = require('cfonts')
 
 
 var routes = require('./routes/index');
@@ -64,5 +65,16 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var sweg = new FONTS({
+    'text': 'musicsync', //text to be converted
+    'font': 'block', //define the font face
+    'color': 'blue, green',
+    'background': '',
+    'letterSpacing': 1, //define letter spacing
+    'space': true, //define if the output text should have empty lines on top and on the bottom
+    'maxLength': '5' //define how many character can be on one line
+});
+
+console.log(sweg); 
 
 module.exports = app;

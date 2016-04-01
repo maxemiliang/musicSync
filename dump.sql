@@ -36,6 +36,7 @@ CREATE TABLE `music_playlists` (
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
   `pID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(300) NOT NULL,
   `owner` int(11) NOT NULL,
   PRIMARY KEY (`pID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -50,4 +51,5 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2016-03-31 06:05:59
+-- 2016-04-01 05:50:22
+
