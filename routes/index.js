@@ -98,7 +98,8 @@ router.get('/add', function(req, res, next){
 
 router.get('/playlists', function(req, res, next){
     if (req.session.loggedIn) {
-        db.query('SELECT * FROM playlist', function(err, results){
+        db.query('SELECT name, pID, owner, username, uID FROM playlist, users INNER JOIN playlist.owner ON users.uID;', function(err, results){
+            console.log(results);
             res.render('playlists', {lists: results, err: req.flash('err'), msg: req.flash('succ')});
         });
     } else {
@@ -108,7 +109,6 @@ router.get('/playlists', function(req, res, next){
 
 router.post('/playlists', function(req, res, next){
     if (req.body.name.length > 0 && req.session.loggedIn) {
-        console.log(req.session.username);
         db.query('INSERT INTO playlist (name, owner) VALUES (?, ?)', [req.body.name, req.session.userID], function(err, results){
             if (err) throw err;
             req.flash('succ', 'Created playlist: ' + req.body.name)

@@ -66,7 +66,7 @@ app.use(function(err, req, res, next) {
 });
 
 var sweg = new FONTS({
-    'text': 'musicsync', //text to be converted
+    'text': 'Sync Music', //text to be converted
     'font': 'block', //define the font face
     'color': 'blue, green',
     'background': '',
