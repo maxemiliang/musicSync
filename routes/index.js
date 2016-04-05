@@ -70,16 +70,6 @@ router.get('/logout', function(req, res, next){
     res.redirect('/');
 });
 
-router.get('/playlist/add/:id', function(req, res, next){
-    if(req.session.loggedIn) {    
-        db.query('SELECT * FROM playlist WHERE owner=?', [req.session.userID], function(err, results){
-            if (err) throw err;
-            res.render('addplay', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username, result: results});
-        });
-    } else {
-        res.redirect('/');
-    }
-});
 
 router.get('/album/:id', function(req, res, next) {
     db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function(err, results) {    
@@ -96,29 +86,6 @@ router.get('/add', function(req, res, next){
     }
 });
 
-router.get('/playlists', function(req, res, next){
-    if (req.session.loggedIn) {
-        db.query('SELECT name, pID, owner, username, uID FROM playlist, users INNER JOIN playlist.owner ON users.uID;', function(err, results){
-            console.log(results);
-            res.render('playlists', {lists: results, err: req.flash('err'), msg: req.flash('succ')});
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.post('/playlists', function(req, res, next){
-    if (req.body.name.length > 0 && req.session.loggedIn) {
-        db.query('INSERT INTO playlist (name, owner) VALUES (?, ?)', [req.body.name, req.session.userID], function(err, results){
-            if (err) throw err;
-            req.flash('succ', 'Created playlist: ' + req.body.name)
-            res.redirect('/playlists');
-        });
-    } else {
-        req.flash('err', 'Error: please supply a name for the playlist');
-        res.redirect('/playlists');
-    }
-});
 
 router.post('/upload', upload.single('file'), function(req, res, next){
     if (req.session.loggedIn) {

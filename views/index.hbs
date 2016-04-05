@@ -9,25 +9,6 @@
     {{/if}}
     <h1>Most recent uploads:</h1>
     <hr>
-    {{#if loggedIn}}
-    {{#each songs}}
-        <div class="panel">
-            <div class="grid-row">
-                <div class="grid-column -xsmall-6">    
-                    <h1>{{title}} - {{artist}} <small>
-                    <a href="/playlist/add/{{location}}"><i class="icon -plus"></i> Add to Playlist</a>
-                    </small></h3>
-                    <mark>in Album: <a class="white-a" href="/album/{{album}}"><strong>{{album}}</strong></a> </mark>
-                    <samp>Uploaded by: {{username}} </samp>
-                </div>
-                <div class="grid-column -xsmall-6">
-                    <div id="a{{location}}" class="aplayer"></div>
-                </div>
-            </div>
-        </div>
-        <br> 
-    {{/each}}
-    {{else}}
     {{#each songs}}
     <div class="panel">
             <div class="grid-row">
@@ -45,7 +26,6 @@
         </div>
         <br> 
     {{/each}}
-    {{/if}}
 </div>
 <script defer>
     i = 1;
