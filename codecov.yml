@@ -1,1 +1,4 @@
 #todo
+
+codecov:
+  branch: master
