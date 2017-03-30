@@ -1,22 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var fsplus = require('fs-plus');
-var fs = require('fs');
-var findRemoveSync = require('find-remove');
-var password = require('password-hash-and-salt');
-var multer = require('multer');
-var upload = multer({ dest: 'public/music/'});
-var BinaryServer = require('binaryjs').BinaryServer;
-var bserver = new BinaryServer({port: 9000, path: '/songStream'});
+const express = require('express');
+const router = express.Router();
+const fsplus = require('fs-plus');
+const fs = require('fs');
+const findRemoveSync = require('find-remove');
+const password = require('password-hash-and-salt');
+const multer = require('multer');
+const upload = multer({ dest: 'public/music/'});
+const BinaryServer = require('binaryjs').BinaryServer;
+const bserver = new BinaryServer({port: 9000, path: '/songStream'});
 process.setMaxListeners(0);
 
-var mysql = require('mysql');
-var db = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'musick'
-});
+const mysql = require('mysql');
+const connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/musick';
+const db = mysql.createConnection(connectionString);
 
 db.connect();
 
@@ -39,7 +35,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/download/:file', function(req, res, next) {
-    var file = 'public/music/' + req.params.file;
+    const file = 'public/music/' + req.params.file;
     if (fsplus.existsSync(file)) {    
         res.download(file);
     } else {
@@ -140,7 +136,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-	var hashed;
+	const hashed;
     if(req.body.username.length > 5 && req.body.password.length > 7 && !req.session.loggedIn) {
         db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(err, result){
             if (result.length == 0){
