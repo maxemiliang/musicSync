@@ -136,7 +136,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-	const hashed;
+	let hashed;
     if(req.body.username.length > 5 && req.body.password.length > 7 && !req.session.loggedIn) {
         db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(err, result){
             if (result.length == 0){
