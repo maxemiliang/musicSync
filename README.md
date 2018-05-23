@@ -14,4 +14,4 @@ To run this project use Docker
 
 Docs can be found here:
 
-https://maxemiliang.me/musicSync
+https://maxemiliang.github.io/musicSync
