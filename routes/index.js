@@ -5,13 +5,18 @@ const fs = require('fs');
 const findRemoveSync = require('find-remove');
 const password = require('password-hash-and-salt');
 const multer = require('multer');
-const upload = multer({ dest: 'public/music/'});
+const upload = multer({
+    dest: 'public/music/'
+});
 const BinaryServer = require('binaryjs').BinaryServer;
-const bserver = new BinaryServer({port: 9000, path: '/songStream'});
+const bserver = new BinaryServer({
+    port: 9000,
+    path: '/songStream'
+});
 process.setMaxListeners(0);
 
 const mysql = require('mysql');
-const connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/musick';
+const connectionString = process.env.DATABASE_URL ||  'mysql://root:root@127.0.0.1/musick';
 const db = mysql.createConnection(connectionString);
 
 db.connect();
@@ -27,16 +32,22 @@ function isLoggedin(req) {
 */
 
 /* GET home page. */
-router.get('/', function(req, res, next) { 
+router.get('/', function (req, res, next) {
     db.query('SELECT * FROM music ORDER BY date DESC', function (err, results) {
         if (err) throw err;
-        res.render('index', {loggedIn: req.session.loggedIn, username: req.session.username, msg: req.flash('succ'), songs: results, err: req.flash('err')});
+        res.render('index', {
+            loggedIn: req.session.loggedIn,
+            username: req.session.username,
+            msg: req.flash('succ'),
+            songs: results,
+            err: req.flash('err')
+        });
     });
 });
 
-router.get('/download/:file', function(req, res, next) {
+router.get('/download/:file', function (req, res, next) {
     const file = 'public/music/' + req.params.file;
-    if (fsplus.existsSync(file)) {    
+    if (fsplus.existsSync(file)) {
         res.download(file);
     } else {
         res.status(404);
@@ -45,50 +56,65 @@ router.get('/download/:file', function(req, res, next) {
     }
 });
 
-router.get('/register', function(req, res, next) {
-    if (!req.session.loggedIn) {    
-        res.render('register', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.get('/login', function(req, res, next) {
+router.get('/register', function (req, res, next) {
     if (!req.session.loggedIn) {
-        res.render('login', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username});
+        res.render('register', {
+            err: req.flash('err'),
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
+        });
     } else {
         res.redirect('/');
     }
 });
 
-router.get('/logout', function(req, res, next){
+router.get('/login', function (req, res, next) {
+    if (!req.session.loggedIn) {
+        res.render('login', {
+            err: req.flash('err'),
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.redirect('/');
 });
 
 
-router.get('/album/:id', function(req, res, next) {
-    db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function(err, results) {    
+router.get('/album/:id', function (req, res, next) {
+    db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function (err, results) {
         if (err) throw err;
-        res.render('album', {album: results, loggedIn: req.session.loggedIn});
+        res.render('album', {
+            album: results,
+            loggedIn: req.session.loggedIn
+        });
     });
 });
 
-router.get('/add', function(req, res, next){
-    if (req.session.loggedIn) {   
-        res.render('upload', {err: req.flash('err'), loggedIn: req.session.loggedIn, username: req.session.username}); 
+router.get('/add', function (req, res, next) {
+    if (req.session.loggedIn) {
+        res.render('upload', {
+            err: req.flash('err'),
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
+        });
     } else {
         res.redirect('/');
     }
 });
 
 
-router.post('/upload', upload.single('file'), function(req, res, next){
+router.post('/upload', upload.single('file'), function (req, res, next) {
     if (req.session.loggedIn) {
-        if (req.file) {     
-            if (req.file.mimetype == 'audio/mpeg') {
+        if (req.file) {
+            if (req.file.mimetype === 'audio/mpeg' ||  req.file.mimetype === 'audio/mp3') {
                 if (req.body.title.length > 0 && req.body.artist.length > 0 && req.body.album.length > 0) {
-                    db.query('INSERT INTO music (title, artist, album, location, username, date) VALUES (?, ?, ?, ?, ?, NOW())', [req.body.title, req.body.artist, req.body.album, req.file.filename, req.session.username], function(err) {
+                    db.query('INSERT INTO music (title, artist, album, location, username, date) VALUES (?, ?, ?, ?, ?, NOW())', [req.body.title, req.body.artist, req.body.album, req.file.filename, req.session.username], function (err) {
                         if (err) throw err;
                         req.flash('succ', 'Song uploaded successfully!');
                         res.redirect('/');
@@ -98,7 +124,9 @@ router.post('/upload', upload.single('file'), function(req, res, next){
                     res.redirect('/add');
                 }
             } else {
-                findRemoveSync('public/music/', {files: req.file.filename});
+                findRemoveSync('public/music/', {
+                    files: req.file.filename
+                });
                 req.flash('err', 'Not a mpeg file!');
                 res.redirect('/add');
             }
@@ -111,12 +139,12 @@ router.post('/upload', upload.single('file'), function(req, res, next){
     }
 });
 
-router.post('/login', function(req, res, next) {
-    db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(err, results){
+router.post('/login', function (req, res, next) {
+    db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, results) {
         if (err) throw err;
 
-        if(results.length > 0) {
-            password(req.body.password).verifyAgainst(results[0]['password'], function(err, verified) {
+        if (results.length > 0) {
+            password(req.body.password).verifyAgainst(results[0]['password'], function (err, verified) {
                 if (err) throw new Error('Something happened!');
                 if (verified) {
                     req.session.userID = results[0]['uID'];
@@ -125,9 +153,9 @@ router.post('/login', function(req, res, next) {
                     res.redirect('/');
                 } else {
                     req.flash('err', 'Password or username is wrong');
-                    res.redirect('/login'); 
+                    res.redirect('/login');
                 }
-            });        
+            });
         } else {
             req.flash('err', 'Password or username is wrong');
             res.redirect('/login');
@@ -135,15 +163,15 @@ router.post('/login', function(req, res, next) {
     });
 });
 
-router.post('/register', function(req, res, next) {
-	let hashed;
-    if(req.body.username.length > 5 && req.body.password.length > 7 && !req.session.loggedIn) {
-        db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(err, result){
-            if (result.length == 0){
-                password(req.body.password).hash(function(err, hash){
+router.post('/register', function (req, res, next) {
+    let hashed;
+    if (req.body.username.length > 5 && req.body.password.length > 7 && !req.session.loggedIn) {
+        db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, result) {
+            if (result.length == 0) {
+                password(req.body.password).hash(function (err, hash) {
                     if (err) throw new Error('Something happened!');
                     hashed = hash;
-                    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [req.body.username, hashed], function(err, results){
+                    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [req.body.username, hashed], function (err, results) {
                         if (err) throw err;
                         res.redirect('/');
                     })
