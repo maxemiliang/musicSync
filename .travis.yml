@@ -38,6 +38,7 @@ deploy:
   local-dir: docs
   on:
     branch: master
+    node: 9
 
 
 sudo: false
