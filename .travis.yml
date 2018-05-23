@@ -1,5 +1,9 @@
 language: node_js
 
+branches:
+  except:
+    - /^build-[0-9a-z\-]*/
+
 cache:
   directories:
     - node_modules
@@ -14,7 +18,7 @@ node_js:
 script:
   - yarn test
   - yarn coverage
-
+  - yarn generate-docs
 
 after_success:
   # CREATE GIT TAG
@@ -26,8 +30,14 @@ after_success:
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
   - git push --quiet https://$GITHUBKEY@github.com/maxemiliang/musicSync $GIT_TAG > /dev/null 2>&1
 
-branches:
-  except:
-    - /^build-[0-9a-z\-]*/
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUBKEY  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  local-dir: docs
+  on:
+    branch: master
+
 
 sudo: false
