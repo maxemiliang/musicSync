@@ -1,6 +1,6 @@
 {
   "name": "musicsync",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/nodemon ./bin/www",
