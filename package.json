@@ -11,7 +11,7 @@
     "preversion": "npm run test",
     "version": "",
     "postversion": "git push && git push --tags",
-    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json -R README.md"
   },
   "dependencies": {
     "aplayer": "^1.3.10",
