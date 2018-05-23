@@ -1,8 +1,0 @@
-ci:
-  tests:
-    unlicensed: warn
-    removed: fail
-    deprecated: fail
-    unmaintained: warn
-    outdated: warn
-    vulnerable: fail
