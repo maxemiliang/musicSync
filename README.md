@@ -4,6 +4,14 @@
 
 This is a nodejs project in which users can upload music and listen to it.
 
+## Running
+
 To run this project use Docker
 
 `docker-compose up`
+
+## Docs
+
+Docs can be found here:
+
+https://maxemiliang.me/musicSync
