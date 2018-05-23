@@ -31,8 +31,10 @@ function isLoggedin(req) {
 }
 */
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+/**
+ * GET home page. 
+ */
+function homePage(req, res, next) {
     db.query('SELECT * FROM music ORDER BY date DESC', function (err, results) {
         if (err) throw err;
         res.render('index', {
@@ -43,9 +45,15 @@ router.get('/', function (req, res, next) {
             err: req.flash('err')
         });
     });
-});
+}
 
-router.get('/download/:file', function (req, res, next) {
+router.get('/', homePage);
+
+/**
+ * GET Download page. 
+ * */
+
+function downloadPage(req, res, next) {
     const file = 'public/music/' + req.params.file;
     if (fsplus.existsSync(file)) {
         res.download(file);
@@ -54,9 +62,11 @@ router.get('/download/:file', function (req, res, next) {
         req.flash('err', 'File not found..');
         res.redirect('/');
     }
-});
+}
+router.get('/download/:file', downloadPage);
 
-router.get('/register', function (req, res, next) {
+/* GET Register page. */
+function registerPage(req, res, next) {
     if (!req.session.loggedIn) {
         res.render('register', {
             err: req.flash('err'),
@@ -66,9 +76,14 @@ router.get('/register', function (req, res, next) {
     } else {
         res.redirect('/');
     }
-});
+}
 
-router.get('/login', function (req, res, next) {
+router.get('/register', registerPage);
+
+/** 
+ * GET Login page. 
+ */
+function loginPage(req, res, next) {
     if (!req.session.loggedIn) {
         res.render('login', {
             err: req.flash('err'),
@@ -78,15 +93,24 @@ router.get('/login', function (req, res, next) {
     } else {
         res.redirect('/');
     }
-});
+}
 
-router.get('/logout', function (req, res, next) {
+router.get('/login', loginPage);
+
+/** 
+ * GET Logout Handler. 
+ */
+function logoutHandler(req, res, next) {
     req.session.destroy();
     res.redirect('/');
-});
+}
 
+router.get('/logout', logoutHandler);
 
-router.get('/album/:id', function (req, res, next) {
+/** 
+ * GET Album page. 
+ */
+function albumPage(req, res, next) {
     db.query('SELECT music.*, users.username FROM music LEFT JOIN users ON users.username=music.username WHERE music.album=?', [req.params.id], function (err, results) {
         if (err) throw err;
         res.render('album', {
@@ -94,9 +118,14 @@ router.get('/album/:id', function (req, res, next) {
             loggedIn: req.session.loggedIn
         });
     });
-});
+}
 
-router.get('/add', function (req, res, next) {
+router.get('/album/:id', albumPage);
+
+/** 
+ * GET add page. 
+ */
+function addPage(req, res, next) {
     if (req.session.loggedIn) {
         res.render('upload', {
             err: req.flash('err'),
@@ -106,10 +135,14 @@ router.get('/add', function (req, res, next) {
     } else {
         res.redirect('/');
     }
-});
+}
 
+router.get('/add', addPage);
 
-router.post('/upload', upload.single('file'), function (req, res, next) {
+/** 
+ * POST upload handler. 
+ */
+function uploadHandler(req, res, next) {
     if (req.session.loggedIn) {
         if (req.file) {
             if (req.file.mimetype === 'audio/mpeg' ||  req.file.mimetype === 'audio/mp3') {
@@ -137,9 +170,14 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
     } else {
         res.redirect('/');
     }
-});
+}
 
-router.post('/login', function (req, res, next) {
+router.post('/upload', upload.single('file'), uploadHandler);
+
+/** 
+ * POST Login Handler.
+ */
+function userHandler(req, res, next) {
     db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, results) {
         if (err) throw err;
 
@@ -161,9 +199,13 @@ router.post('/login', function (req, res, next) {
             res.redirect('/login');
         }
     });
-});
+}
+router.post('/login', userHandler);
 
-router.post('/register', function (req, res, next) {
+/** 
+ * POST Register Handler. 
+ */
+function registerHandler(req, res, next) {
     let hashed;
     if (req.body.username.length > 5 && req.body.password.length > 7 && !req.session.loggedIn) {
         db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, result) {
@@ -185,7 +227,9 @@ router.post('/register', function (req, res, next) {
         req.flash('err', 'Username needs to be longer than 5 characters and password needs to be longer than 7 characters!');
         res.redirect('/register');
     }
-});
+}
+
+router.post('/register', registerHandler);
 
 
 module.exports = router;
