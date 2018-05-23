@@ -20,24 +20,26 @@ app.set('view engine', 'hbs');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'oeffsoidfsgodfjgoejfoeifsjfjsofjeofdobjfborogfojfoefjsfisjfisejfosdijf',
-                 saveUninitialized: false,
-                 cookie: {
-                     maxAge: 24 * 60 * 60 * 1000
-                 } ,
-                 resave: false
-                }));
+app.use(session({
+  secret: 'oeffsoidfsgodfjgoejfoeifsjfjsofjeofdobjfborogfojfoefjsfisjfisejfosdijf',
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  resave: false
+}));
 app.use(flash());
-
 app.use('/', routes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = '<h1>Error 404 Not found!</h1><br><a href="/">Go back to safety</a>'
-    res.send(err);
+app.use(function (req, res, next) {
+  var err = '<h1>Error 404 Not found!</h1><br><a href="/">Go back to safety</a>'
+  res.send(err);
 });
 
 // error handlers
@@ -46,7 +48,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -57,7 +59,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -66,15 +68,15 @@ app.use(function(err, req, res, next) {
 });
 
 var sweg = new FONTS({
-    'text': 'Sync Music', //text to be converted
-    'font': 'block', //define the font face
-    'color': 'blue, green',
-    'background': '',
-    'letterSpacing': 1, //define letter spacing
-    'space': true, //define if the output text should have empty lines on top and on the bottom
-    'maxLength': '5' //define how many character can be on one line
+  'text': 'Sync Music', //text to be converted
+  'font': 'block', //define the font face
+  'color': 'blue, green',
+  'background': '',
+  'letterSpacing': 1, //define letter spacing
+  'space': true, //define if the output text should have empty lines on top and on the bottom
+  'maxLength': '5' //define how many character can be on one line
 });
 
-console.log(sweg); 
+console.log(sweg);
 
 module.exports = app;
