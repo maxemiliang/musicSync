@@ -11,6 +11,8 @@ cache:
 services:
   - docker
 
+sudo: required
+
 node_js:
   - "8"
   - "9"
@@ -44,4 +46,3 @@ deploy:
     node: 9
 
 
-sudo: false

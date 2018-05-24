@@ -30,6 +30,7 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+yarn-error.log
 
 # generated docs folder
 docs
