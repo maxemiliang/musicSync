@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  musicsync:
+    container_name: musicsync
+    build:
+      context: .
+      args:
+        - NODE_ENV=production
+    volumes:
+      - ./:/app
+    entrypoint: yarn test
+    tty: true
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_URL: mysql://root:secret@mysql/musick
+      PORT: 8085
+    ports:
+      - "8085:8085"
+  mysql:
+    image: mariadb:latest
+    container_name: musicsync-db
+    volumes:
+      - ./sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+
