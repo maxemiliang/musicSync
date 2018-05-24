@@ -19,9 +19,7 @@ script:
   - yarn test
   - yarn coverage
 
-before_deploy:
-  # create docs 
-  - yarn generate-docs
+after_success:
   # CREATE GIT TAG
   - git config --global user.email "builds@travis-ci.org"
   - git config --global user.name "Travis CI"
@@ -30,6 +28,10 @@ before_deploy:
   - git commit -m "Set build VERSION number" public/version
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
   - git push --quiet https://$GITHUBKEY@github.com/maxemiliang/musicSync $GIT_TAG > /dev/null 2>&1
+
+before_deploy:
+  # create docs 
+  - yarn generate-docs
 
 deploy:
   provider: pages
