@@ -5,6 +5,9 @@
   "scripts": {
     "start": "./node_modules/.bin/nodemon ./bin/www",
     "test": "nyc ava --timeout=3000",
+    "clean-test": "docker-compose -f docker-compose.test.yml up --build",
+    "development": "docker-compose -f docker-compose.development.yml up --build",
+    "production": "docker-compose -f docker-compose.production.yml up --build",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "docker-build": "docker build --rm -t registry.maxemiliang.me/projects/musicsync:latest .",
     "docker-push": "docker push registry.maxemiliang.me/projects/musicsync:latest",
