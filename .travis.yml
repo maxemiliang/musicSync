@@ -31,7 +31,7 @@ install:
   - yarn install
 
 script:
-  - yarn test
+  - yarn clean-test
   - yarn coverage
 
 after_success:
