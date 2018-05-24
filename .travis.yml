@@ -5,6 +5,7 @@ branches:
     - /^build-[0-9a-z\-]*/
 
 cache:
+  yarn: true
   directories:
     - node_modules
 
