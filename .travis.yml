@@ -18,9 +18,10 @@ node_js:
 script:
   - yarn test
   - yarn coverage
-  - yarn generate-docs
 
 after_success:
+  # create docs 
+  - yarn generate-docs
   # CREATE GIT TAG
   - git config --global user.email "builds@travis-ci.org"
   - git config --global user.name "Travis CI"
