@@ -6,9 +6,7 @@ services:
     build:
       context: .
       args:
-        - NODE_ENV=production
-    volumes:
-      - ./:/app
+        - NODE_ENV=development
     entrypoint: yarn test
     tty: true
     links:
