@@ -77,6 +77,7 @@ var sweg = new FONTS({
   'maxLength': '5' //define how many character can be on one line
 });
 
+// eslint-disable-next-line
 console.log(sweg);
 
 module.exports = app;

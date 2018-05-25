@@ -16,7 +16,7 @@ const bserver = new BinaryServer({
 process.setMaxListeners(0);
 
 const mysql = require('mysql');
-const connectionString = process.env.DATABASE_URL ||  'mysql://root:root@127.0.0.1/musick';
+const connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/musick';
 const db = mysql.createConnection(connectionString);
 
 db.connect();
@@ -145,7 +145,7 @@ router.get('/add', addPage);
 function uploadHandler(req, res, next) {
     if (req.session.loggedIn) {
         if (req.file) {
-            if (req.file.mimetype === 'audio/mpeg' ||  req.file.mimetype === 'audio/mp3') {
+            if (req.file.mimetype === 'audio/mpeg' || req.file.mimetype === 'audio/mp3') {
                 if (req.body.title.length > 0 && req.body.artist.length > 0 && req.body.album.length > 0) {
                     db.query('INSERT INTO music (title, artist, album, location, username, date) VALUES (?, ?, ?, ?, ?, NOW())', [req.body.title, req.body.artist, req.body.album, req.file.filename, req.session.username], function (err) {
                         if (err) throw err;
