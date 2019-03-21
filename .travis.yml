@@ -4,10 +4,6 @@ branches:
   except:
     - /^build-[0-9a-z\-]*/
 
-cache:
-  directories:
-    - node_modules
-
 services:
   - docker
 
