@@ -27,7 +27,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - yarn install
+  - npm ci
 
 script:
   - nom run lint
@@ -47,7 +47,7 @@ after_success:
 
 before_deploy:
   # create docs
-  - yarn generate-docs
+  - npm run generate-docs
 
 deploy:
   provider: pages
