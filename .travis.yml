@@ -4,19 +4,14 @@ branches:
   except:
     - /^build-[0-9a-z\-]*/
 
-cache:
-  yarn: true
-  directories:
-    - node_modules
-
 services:
   - docker
 
 sudo: required
 
 node_js:
-  - "8"
-  - "9"
+  - '8'
+  - '10'
 
 env:
   - DOCKER_COMPOSE_VERSION=1.21.2
@@ -28,12 +23,13 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - yarn install
+  - npm ci
 
 script:
-  - yarn lint
-  - yarn clean-test
-  - yarn coverage
+  - npm run lint
+  - npm run test
+  - npm run clean-test
+  - npm run coverage
 
 after_success:
   # CREATE GIT TAG
@@ -46,17 +42,15 @@ after_success:
   - git push --quiet https://$GITHUBKEY@github.com/maxemiliang/musicSync $GIT_TAG > /dev/null 2>&1
 
 before_deploy:
-  # create docs 
-  - yarn generate-docs
+  # create docs
+  - npm run generate-docs
 
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUBKEY  # Set in the settings page of your repository, as a secure variable
+  github-token: $GITHUBKEY # Set in the settings page of your repository, as a secure variable
   keep-history: true
   local-dir: docs
   on:
     branch: master
-    node: 9
-
-
+    node: 10

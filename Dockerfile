@@ -2,7 +2,7 @@ FROM node:alpine
 WORKDIR /app
 
 copy package.json /app/package.json
-RUN yarn install
+RUN npm install
 
 
 COPY . .
