@@ -7,7 +7,7 @@ services:
       context: .
       args:
         - NODE_ENV=development
-    entrypoint: yarn test
+    entrypoint: npm run test
     tty: true
     links:
       - mysql
@@ -17,7 +17,7 @@ services:
       DATABASE_URL: mysql://root:secret@mysql/musick
       PORT: 8085
     ports:
-      - "8085:8085"
+      - '8085:8085'
   mysql:
     image: mariadb:latest
     container_name: musicsync-db
@@ -25,4 +25,3 @@ services:
       - ./sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
       MYSQL_ROOT_PASSWORD: secret
-

@@ -9,7 +9,7 @@ services:
         - NODE_ENV=development
     volumes:
       - ./:/app
-    entrypoint: yarn start
+    entrypoint: npm start
     tty: true
     links:
       - mysql
@@ -19,7 +19,7 @@ services:
       DATABASE_URL: mysql://root:secret@mysql/musick
       PORT: 8085
     ports:
-      - "8085:8085"
+      - '8085:8085'
   mysql:
     image: mariadb:latest
     container_name: musicsync-db
