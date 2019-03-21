@@ -5,7 +5,6 @@ branches:
     - /^build-[0-9a-z\-]*/
 
 cache:
-  yarn: true
   directories:
     - node_modules
 
@@ -15,8 +14,8 @@ services:
 sudo: required
 
 node_js:
-  - "8"
-  - "9"
+  - '8'
+  - '9'
 
 env:
   - DOCKER_COMPOSE_VERSION=1.21.2
@@ -31,9 +30,10 @@ install:
   - yarn install
 
 script:
-  - yarn lint
-  - yarn clean-test
-  - yarn coverage
+  - nom run lint
+  - npm run test
+  - npm run clean-test
+  - npm run coverage
 
 after_success:
   # CREATE GIT TAG
@@ -46,17 +46,15 @@ after_success:
   - git push --quiet https://$GITHUBKEY@github.com/maxemiliang/musicSync $GIT_TAG > /dev/null 2>&1
 
 before_deploy:
-  # create docs 
+  # create docs
   - yarn generate-docs
 
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUBKEY  # Set in the settings page of your repository, as a secure variable
+  github-token: $GITHUBKEY # Set in the settings page of your repository, as a secure variable
   keep-history: true
   local-dir: docs
   on:
     branch: master
     node: 9
-
-
