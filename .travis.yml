@@ -53,4 +53,4 @@ deploy:
   local-dir: docs
   on:
     branch: master
-    node: 9
+    node: 10
