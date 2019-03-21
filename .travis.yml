@@ -15,7 +15,7 @@ sudo: required
 
 node_js:
   - '8'
-  - '9'
+  - '10'
 
 env:
   - DOCKER_COMPOSE_VERSION=1.21.2
