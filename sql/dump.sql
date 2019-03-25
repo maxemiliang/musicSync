@@ -3,9 +3,9 @@
 SET NAMES utf8;
 SET time_zone = '+00:00';
 
-DROP DATABASE IF EXISTS `musick`;
-CREATE DATABASE `musick` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `musick`;
+DROP DATABASE IF EXISTS `musicsync`;
+CREATE DATABASE `musicsync` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `musicsync`;
 
 DROP TABLE IF EXISTS `music`;
 CREATE TABLE `music` (

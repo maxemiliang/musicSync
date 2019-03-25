@@ -16,7 +16,7 @@ const bserver = new BinaryServer({
 process.setMaxListeners(0);
 
 const mysql = require('mysql');
-let connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/';
+let connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/musicsync';
 let db;
 
 if (process.env.INITALIZE_DB) {
@@ -31,7 +31,7 @@ if (process.env.INITALIZE_DB) {
         // eslint-disable-next-line no-console
         console.log(res);
         db.changeUser({
-            database: 'musick'
+            database: 'musicsync'
         }, function (err, res) {
             if (err) throw err;
         });
@@ -39,7 +39,7 @@ if (process.env.INITALIZE_DB) {
 } else {
     db = mysql.createConnection(connectionString);
     db.changeUser({
-        database: 'musick'
+        database: 'musicsync'
     }, function (err, res) {
         if (err) throw err;
     });
