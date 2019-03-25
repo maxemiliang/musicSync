@@ -29,7 +29,7 @@ if (process.env.INITALIZE_DB) {
     db.query(initDb, function (err, res) {
         if (err) throw err;
         // eslint-disable-next-line no-console
-        console.log(res);
+        console.log('Database: Resetted!');
         db.changeUser({
             database: 'musicsync'
         }, function (err, res) {
