@@ -16,8 +16,9 @@ services:
     depends_on:
       - mysql
     environment:
-      DATABASE_URL: mysql://root:secret@mysql/musick
+      DATABASE_URL: mysql://root:secret@mysql/
       PORT: 8085
+      INITALIZE_DB: 1
     ports:
       - '8085:8085'
   mysql:
@@ -25,9 +26,10 @@ services:
     container_name: musicsync-db
     volumes:
       - musicsync-db:/var/lib/mysql
-      - ./sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
       MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - '3306:3306'
 
 volumes:
   musicsync-db:

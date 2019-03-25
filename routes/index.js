@@ -16,10 +16,34 @@ const bserver = new BinaryServer({
 process.setMaxListeners(0);
 
 const mysql = require('mysql');
-const connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/musick';
-const db = mysql.createConnection(connectionString);
+let connectionString = process.env.DATABASE_URL || 'mysql://root:root@127.0.0.1/';
+let db;
 
-db.connect();
+if (process.env.INITALIZE_DB) {
+    // eslint-disable-next-line global-require
+    require('require-sql');
+    // eslint-disable-next-line global-require
+    const initDb = require('./../sql/dump.sql');
+    connectionString += '?multipleStatements=true';
+    db = mysql.createConnection(connectionString);
+    db.query(initDb, function (err, res) {
+        if (err) throw err;
+        // eslint-disable-next-line no-console
+        console.log(res);
+        db.changeUser({
+            database: 'musick'
+        }, function (err, res) {
+            if (err) throw err;
+        });
+    });
+} else {
+    db = mysql.createConnection(connectionString);
+    db.changeUser({
+        database: 'musick'
+    }, function (err, res) {
+        if (err) throw err;
+    });
+}
 
 /*
 function isLoggedin(req) {
