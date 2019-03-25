@@ -6,4 +6,5 @@ RUN npm install
 
 
 COPY . .
+COPY CHECKS /app/CHECKS
 CMD ["npm", "run", "start"]

@@ -256,4 +256,8 @@ function registerHandler(req, res, next) {
 router.post('/register', registerHandler);
 
 
+router.get('/healthz', function (req, res, next) {
+    res.send('Ok!');
+});
+
 module.exports = router;
