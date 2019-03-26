@@ -3,7 +3,8 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/nodemon ./bin/www",
+    "start-mon": "./node_modules/.bin/nodemon ./bin/www",
+    "start": "node bin/www",
     "test": "./node_modules/.bin/nyc ava --timeout=3000",
     "clean-test": "docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit",
     "lint": "./node_modules/.bin/eslint app.js ./routes/*.js",
