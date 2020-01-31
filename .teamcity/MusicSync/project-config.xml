@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="be5365de-7e7b-4890-af5c-81891ec276a9" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>MusicSync</name>
+  <parameters />
+  <project-extensions>
+    <extension id="PROJECT_EXT_19" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="ALWAYS_USE_CURRENT" />
+        <param name="credentialsStorageType" value="credentialsJSON" />
+        <param name="enabled" value="true" />
+        <param name="rootId" value="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
+        <param name="showChanges" value="false" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_5" type="OAuthProvider">
+      <parameters>
+        <param name="displayName" value="Docker Registry" />
+        <param name="providerType" value="Docker" />
+        <param name="repositoryUrl" value="https://registry.maxemiliang.me" />
+        <param name="secure:userPass" value="credentialsJSON:63c9be1a-d730-418f-a79b-5b8d12d36259" />
+        <param name="userName" value="maxemiliang" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_6" type="IssueTracker">
+      <parameters>
+        <param name="autoSync" value="true" />
+        <param name="host" value="https://issues.maxemiliang.cloud" />
+        <param name="idPrefix" value="" />
+        <param name="name" value="YouTrack" />
+        <param name="secure:password" value="credentialsJSON:63c9be1a-d730-418f-a79b-5b8d12d36259" />
+        <param name="type" value="youtrack" />
+        <param name="username" value="maxemiliang" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_8" type="OAuthProvider">
+      <parameters>
+        <param name="displayName" value="Docker Registry" />
+        <param name="providerType" value="Docker" />
+        <param name="repositoryUrl" value="https://r.maxemiliang.me" />
+        <param name="secure:userPass" value="credentialsJSON:63c9be1a-d730-418f-a79b-5b8d12d36259" />
+        <param name="userName" value="maxemiliang" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

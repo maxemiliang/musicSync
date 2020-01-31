@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="3ee331d0-95a5-425c-896f-8c40e9ca7e34" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowExternalStatus" value="true" />
+    </options>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_2" name="" type="DockerCommand">
+        <parameters>
+          <param name="command.args" value="--pull" />
+          <param name="docker.command.type" value="build" />
+          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/musicsync:latest" />
+          <param name="docker.push.remove.image" value="true" />
+          <param name="dockerfile.path" value="Dockerfile" />
+          <param name="dockerfile.source" value="PATH" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_3" name="Push docker container" type="DockerCommand">
+        <parameters>
+          <param name="docker.command.type" value="push" />
+          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/musicsync:latest" />
+          <param name="docker.push.remove.image" value="true" />
+          <param name="dockerfile.source" value="PATH" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_3" type="commit-status-publisher">
+        <parameters>
+          <param name="publisherId" value="upsourcePublisher" />
+          <param name="secure:upsourcePassword" value="credentialsJSON:94536674-1210-4500-8469-fd7bfefb4d6b" />
+          <param name="upsourceProjectId" value="musicsync" />
+          <param name="upsourceServerUrl" value="https://review.maxemiliang.cloud" />
+          <param name="upsourceUsername" value="musicsync" />
+          <param name="vcsRootId" value="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
+        </parameters>
+      </extension>
+      <extension id="DockerSupport" type="DockerSupport">
+        <parameters>
+          <param name="login2registry" value="PROJECT_EXT_5" />
+          <param name="loginCheckbox" value="on" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_4" type="pullRequests">
+        <parameters>
+          <param name="authenticationType" value="vcsRoot" />
+          <param name="filterAuthorRole" value="MEMBER_OR_COLLABORATOR" />
+          <param name="filterTargetBranch" value="refs/heads/master" />
+          <param name="providerType" value="github" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_5" type="com.evernote.teamcity.datadog.DataDogBuildFeature">
+        <parameters>
+          <param name="DATADOG_AGENT_ADDRESS_AND_PORT" value="localhost:8125" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
