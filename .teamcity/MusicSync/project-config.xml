@@ -14,11 +14,11 @@
         <param name="showChanges" value="false" />
       </parameters>
     </extension>
-    <extension id="PROJECT_EXT_21" type="sonar-qube">
+    <extension id="PROJECT_EXT_22" type="sonar-qube">
       <parameters>
-        <param name="id" value="05134ac1-f35f-41ac-95e7-9e03b53608a6" />
-        <param name="login" value="%Sonar_token%" />
-        <param name="name" value="MaxCloud Sonar" />
+        <param name="id" value="31df3a51-09c2-44d1-88a8-4f42545aa798" />
+        <param name="login" value="%sonar_token%" />
+        <param name="name" value="MaxCloud Sonar Server" />
         <param name="url" value="https://sonar.maxemiliang.cloud" />
       </parameters>
     </extension>
