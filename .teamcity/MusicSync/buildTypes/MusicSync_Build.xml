@@ -35,6 +35,17 @@
           <param name="version" value="12.14.1" />
         </parameters>
       </runner>
+      <runner id="RUNNER_16" name="Run SonarScanner" type="sonar-plugin">
+        <parameters>
+          <param name="sonarProjectKey" value="musicsync" />
+          <param name="sonarProjectName" value="musicsync" />
+          <param name="sonarProjectSources" value="./" />
+          <param name="sonarProjectVersion" value="build-%build.number%" />
+          <param name="sonarServer" value="05134ac1-f35f-41ac-95e7-9e03b53608a6" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
