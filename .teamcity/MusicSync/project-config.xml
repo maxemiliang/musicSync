@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="be5365de-7e7b-4890-af5c-81891ec276a9" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
   <name>MusicSync</name>
   <parameters>
-    <param name="sonar_token" value="credentialsJSON:d86c4095-d706-485a-aeb2-e0313786a1ad" spec="password display='hidden' readOnly='true'" />
+    <param name="sonarLogin" value="credentialsJSON:d86c4095-d706-485a-aeb2-e0313786a1ad" spec="password display='hidden' readOnly='true'" />
   </parameters>
   <project-extensions>
     <extension id="PROJECT_EXT_19" type="versionedSettings">
@@ -12,14 +12,6 @@
         <param name="enabled" value="true" />
         <param name="rootId" value="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
         <param name="showChanges" value="false" />
-      </parameters>
-    </extension>
-    <extension id="PROJECT_EXT_22" type="sonar-qube">
-      <parameters>
-        <param name="id" value="31df3a51-09c2-44d1-88a8-4f42545aa798" />
-        <param name="login" value="%sonar_token%" />
-        <param name="name" value="MaxCloud Sonar Server" />
-        <param name="url" value="https://sonar.maxemiliang.cloud" />
       </parameters>
     </extension>
     <extension id="PROJECT_EXT_5" type="OAuthProvider">
