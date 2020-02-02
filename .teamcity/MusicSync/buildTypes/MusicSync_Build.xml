@@ -43,7 +43,7 @@
           <param name="sonarProjectName" value="musicsync" />
           <param name="sonarProjectSources" value="./" />
           <param name="sonarProjectVersion" value="build-%build.number%" />
-          <param name="sonarServer" value="05134ac1-f35f-41ac-95e7-9e03b53608a6" />
+          <param name="sonarServer" value="31df3a51-09c2-44d1-88a8-4f42545aa798" />
           <param name="teamcity.step.mode" value="default" />
           <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
         </parameters>
