@@ -38,11 +38,12 @@
       </runner>
       <runner id="RUNNER_16" name="Run SonarScanner" type="sonar-plugin">
         <parameters>
+          <param name="additionalParameters" value="sonar.exclusions=public/**/*" />
           <param name="sonarProjectKey" value="musicsync" />
           <param name="sonarProjectName" value="musicsync" />
           <param name="sonarProjectSources" value="./" />
           <param name="sonarProjectVersion" value="build-%build.number%" />
-          <param name="sonarServer" value="31df3a51-09c2-44d1-88a8-4f42545aa798" />
+          <param name="sonarServer" value="4be9964f-28e8-4a50-918b-9ab6fc39f57b" />
           <param name="teamcity.step.mode" value="default" />
           <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
         </parameters>
