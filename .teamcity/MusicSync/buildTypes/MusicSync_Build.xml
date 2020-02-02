@@ -7,7 +7,9 @@
       <option name="allowExternalStatus" value="true" />
       <option name="maximumNumberOfBuilds" value="1" />
     </options>
-    <parameters />
+    <parameters>
+      <param name="Sonar token" value="credentialsJSON:d86c4095-d706-485a-aeb2-e0313786a1ad" spec="password display='hidden' readOnly='true'" />
+    </parameters>
     <build-runners>
       <runner id="RUNNER_2" name="" type="DockerCommand">
         <parameters>
