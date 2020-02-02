@@ -38,7 +38,7 @@
       </runner>
       <runner id="RUNNER_16" name="Run SonarScanner" type="sonar-plugin">
         <parameters>
-          <param name="additionalParameters" value="sonar.exclusions=public/**/*" />
+          <param name="additionalParameters" value="-Dsonar.exclusions=&quot;public/**/*&quot;" />
           <param name="sonarProjectKey" value="musicsync" />
           <param name="sonarProjectName" value="musicsync" />
           <param name="sonarProjectSources" value="./" />
