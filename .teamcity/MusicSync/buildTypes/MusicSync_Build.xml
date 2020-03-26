@@ -75,16 +75,6 @@ dokku tags:deploy musicsync v%build.number%]]></param>
       </build-trigger>
     </build-triggers>
     <build-extensions>
-      <extension id="BUILD_EXT_3" type="commit-status-publisher">
-        <parameters>
-          <param name="publisherId" value="upsourcePublisher" />
-          <param name="secure:upsourcePassword" value="credentialsJSON:94536674-1210-4500-8469-fd7bfefb4d6b" />
-          <param name="upsourceProjectId" value="musicsync" />
-          <param name="upsourceServerUrl" value="https://review.maxemiliang.cloud" />
-          <param name="upsourceUsername" value="musicsync" />
-          <param name="vcsRootId" value="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
-        </parameters>
-      </extension>
       <extension id="DockerSupport" type="DockerSupport">
         <parameters>
           <param name="login2registry" value="PROJECT_EXT_5" />
