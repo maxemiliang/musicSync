@@ -24,7 +24,7 @@
       <runner id="RUNNER_3" name="Push docker container" type="DockerCommand">
         <parameters>
           <param name="docker.command.type" value="push" />
-          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/musicsync:latest" />
+          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/musicsync:v%build.number%" />
           <param name="docker.push.remove.image" value="true" />
           <param name="dockerfile.source" value="PATH" />
           <param name="teamcity.step.mode" value="default" />
