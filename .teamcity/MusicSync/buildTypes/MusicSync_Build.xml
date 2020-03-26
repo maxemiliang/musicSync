@@ -48,6 +48,18 @@
           <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
         </parameters>
       </runner>
+      <runner id="RUNNER_19" name="Deploy to prod" type="ssh-exec-runner">
+        <parameters>
+          <param name="jetbrains.buildServer.deployer.targetUrl" value="app.maxemiliang.cloud" />
+          <param name="jetbrains.buildServer.deployer.username" value="dokku_deploy" />
+          <param name="jetbrains.buildServer.sshexec.authMethod" value="PWD" />
+          <param name="jetbrains.buildServer.sshexec.command"><![CDATA[docker pull registry.maxemiliang.me/projects/musicsync:v%build.number%
+docker tag registry.maxemiliang.me/projects/musicsync:v%build.number% dokku/musicsync:v%build.number% 
+dokku tags:deploy musicsync v%build.number%]]></param>
+          <param name="secure:jetbrains.buildServer.deployer.password" value="credentialsJSON:a7c8beda-47ac-41c4-ac85-aad01df3a61c" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="MusicSync_HttpsGithubComMaxemiliangMusicSyncRefsHeadsMaster" />
